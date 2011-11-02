@@ -1,51 +1,8 @@
-class Kimchi
-  
-  def uri(uri)
-    puts uri
-  end
-  
-  def feature(feature)
-    puts feature.keyword
-  end
-  
-  def background(background)
-    puts background.keyword
-  end
-  
-  def scenario(scenario)
-    puts scenario.keyword
-  end
+$: << File.expand_path(File.dirname(__FILE__))
 
-  def scenario_outline(outline)
-    puts outline.keyword
-  end
+require 'kimchi/code_generator'
+require 'kimchi/feature_syntax'
 
-  def examples(examples)
-    puts examples.keyword
-  end
-
-  def step(step)
-    puts step.keyword
-  end
-  
-  def comment(comment)
-    puts comment.content
-  end
-  
-  def tag(tag)
-    puts tag.keyword
-  end
-  
-  def table(content)
-    puts content
-  end
-  
-  def py_string(string)
-    puts string
-  end
-  
-  def eof()
-    puts "parsed..."
-  end
-  
+module Kimchi
+  VERSION = "0.0.0"
 end
