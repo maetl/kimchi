@@ -1,3 +1,7 @@
+require 'rubygems'
+require 'active_support'
+require 'active_support/inflector'
+
 $: << File.expand_path(File.dirname(__FILE__))
 
 require 'kimchi/code_generator'
