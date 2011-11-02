@@ -1,7 +1,8 @@
 Feature: Proof of concept
-	In order to parse cucumber features
-	As a manic software engineer with thousands of things to test
+ 	In order to parse cucumber features
+ 	As a manic software engineer with thousands of things to test
 	I want to ensure the lexer can be loaded
+	So that I can start working on a code generator for PHPUnit
 	
 	Scenario: Tokens are recognized
 		Given this text syntax
