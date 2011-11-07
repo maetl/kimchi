@@ -12,15 +12,22 @@ class CodeGeneratorTest < Test::Unit::TestCase
   end
   
   def test_can_write_empty_class
-    @generator.classname = "GeneratedEmpty"
+    @generator.classname = "EmptyClass"
     
     assert_equal expected_code("empty_class"), @generator.write
   end
   
-  def test_can_write_given_sentence_to_classname
-    @generator.classname = "Can update and delete Products"
+  def test_can_write_classname
+    @generator.classname = "Can update and delete Products".gsub(' ', '_').camelize
 
     assert_equal expected_code("sentence_to_class"), @generator.write    
+  end
+  
+  def test_can_write_single_method_to_class
+    @generator.classname = "EmptyMethodClass"
+    @generator.add_method "emptyMethodFunction"
+
+    assert_equal expected_code("empty_method"), @generator.write    
   end
 
 end

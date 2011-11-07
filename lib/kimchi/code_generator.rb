@@ -3,12 +3,18 @@ module Kimchi
   class CodeGenerator
     
     def initialize
-      
+      @nl = "\n"
+      @ind = "\t"
       @classname = ""
+      @methods = []
     end
     
     def classname=(name)
-      @classname = name.gsub(' ', '_').camelize
+      @classname = name
+    end
+    
+    def add_method(name)
+      @methods << name
     end
     
     def write
@@ -17,14 +23,20 @@ module Kimchi
     
     private
       def start_tag
-        "<?php\n"
+        "<?php#{@nl}"
       end
       
       def class_definition
-        "\nclass " + @classname + "\n{\n\n}"
+        "#{@nl}class #{@classname}#{@nl}{#{@nl}#{class_body}#{@nl}}"
+      end
+    
+      def class_body
+        body = @methods.collect do |method_name|
+          "#{@nl}#{@ind}public function #{method_name}()#{@nl}#{@ind}{#{@nl}#{@ind}#{@ind}#{@nl}#{@ind}}#{@nl}"
+        end
+        body.join(@nl)
       end
     
   end
 
 end
-
