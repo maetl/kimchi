@@ -21,7 +21,7 @@ module Kimchi
       end
       
       def class_definition
-        "\nclass " + @classname + "\n{\n\n}\n"
+        "\nclass " + @classname + "\n{\n\n}"
       end
     
   end

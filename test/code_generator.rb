@@ -7,32 +7,20 @@ class CodeGeneratorTest < Test::Unit::TestCase
     @generator = Kimchi::CodeGenerator.new
   end
   
+  def expected_code(name)
+    File.read(File.dirname(__FILE__) + "/code_generator/#{name}.php")
+  end
+  
   def test_can_write_empty_class
     @generator.classname = "GeneratedEmpty"
     
-    generated_class = <<GEN 
-<?php
-
-class GeneratedEmpty
-{
-
-}
-GEN
-    assert_equal generated_class, @generator.write
+    assert_equal expected_code("empty_class"), @generator.write
   end
   
   def test_can_write_given_sentence_to_classname
     @generator.classname = "Can update and delete Products"
 
-    generated_class = <<GEN 
-<?php
-
-class CanUpdateAndDeleteProducts
-{
-
-}
-GEN
-    assert_equal generated_class, @generator.write    
+    assert_equal expected_code("sentence_to_class"), @generator.write    
   end
 
 end
