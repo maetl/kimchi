@@ -32,7 +32,7 @@ module Kimchi
     
       def class_body
         body = @methods.collect do |method|
-          "#{@nl}#{@ind}public function #{method[:name]}()#{@nl}#{@ind}{#{method_body(method[:sequence])}#{@nl}#{@ind}}#{@nl}"
+          "#{@nl}#{@ind}public function #{method[:name]}()#{@nl}#{@ind}{#{@nl}#{method_body(method[:sequence])}#{@nl}#{@ind}}#{@nl}"
         end
         body.join(@nl)
       end
@@ -40,7 +40,7 @@ module Kimchi
       def method_body(sequence)
         sequence || sequence = []
         body = sequence.collect do |line|
-          "#{@nl}#{@ind}#{@ind}$this->#{line}();"
+          "#{@ind}#{@ind}$this->#{line}();"
         end
         body.join(@nl) 
       end
