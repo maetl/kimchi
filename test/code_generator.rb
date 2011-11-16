@@ -17,17 +17,20 @@ class CodeGeneratorTest < Test::Unit::TestCase
     assert_equal expected_code("empty_class"), @generator.write
   end
   
-  def test_can_write_classname
-    @generator.classname = "Can update and delete Products".gsub(' ', '_').camelize
-
-    assert_equal expected_code("sentence_to_class"), @generator.write    
-  end
-  
-  def test_can_write_single_method_to_class
+  def test_can_write_empty_method_to_class
     @generator.classname = "EmptyMethodClass"
-    @generator.add_method "emptyMethodFunction"
+    @generator.add_method :name => "emptyMethodFunction"
 
     assert_equal expected_code("empty_method"), @generator.write    
+  end
+  
+  def test_can_write_basic_method_to_class
+    @generator.classname = "BasicMethodClass"
+    @generator.add_method(
+      { :name => "basicMethodFunction", :sequence => ["callInternalProcess"] }
+    )
+
+    assert_equal expected_code("basic_method"), @generator.write    
   end
 
 end

@@ -1,6 +1,11 @@
 <?php
 
-class CanUpdateAndDeleteProducts
+class BasicMethodClass
 {
+
+	public function basicMethodFunction()
+	{
+		$this->callInternalProcess();
+	}
 
 }

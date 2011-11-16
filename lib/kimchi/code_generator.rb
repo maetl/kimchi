@@ -13,8 +13,8 @@ module Kimchi
       @classname = name
     end
     
-    def add_method(name)
-      @methods << name
+    def add_method(method)
+      @methods << method
     end
     
     def write
@@ -31,10 +31,18 @@ module Kimchi
       end
     
       def class_body
-        body = @methods.collect do |method_name|
-          "#{@nl}#{@ind}public function #{method_name}()#{@nl}#{@ind}{#{@nl}#{@ind}#{@ind}#{@nl}#{@ind}}#{@nl}"
+        body = @methods.collect do |method|
+          "#{@nl}#{@ind}public function #{method[:name]}()#{@nl}#{@ind}{#{method_body(method[:sequence])}#{@nl}#{@ind}}#{@nl}"
         end
         body.join(@nl)
+      end
+      
+      def method_body(sequence)
+        sequence || sequence = []
+        body = sequence.collect do |line|
+          "#{@nl}#{@ind}#{@ind}$this->#{line}();"
+        end
+        body.join(@nl) 
       end
     
   end
