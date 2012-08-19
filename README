@@ -1,4 +1,18 @@
 Kimchi
 ======
 
-Experiments with the Gherkin parser
+Create functional tests for PHP web applications using a subset of the Cucumber syntax.
+
+Requirements
+------------
+
+* Ruby 1.8+, Rubygems and Cucumber
+* PHP 5.2+, PEAR and PHPUnit
+
+Getting Started
+---------------
+
+1. Install the gem and the PEAR package
+2. Write a test case
+3. Run the code generator
+4. Run the tests
