@@ -1,8 +1,10 @@
 
-task :fixture do
-  sh "ruby kimchi.rb"
+require 'rake/testtask'
+
+Rake::TestTask.new do |t|
+  t.libs << 'test'
 end
 
-task :test do
-  sh "ruby test/code_generator.rb"
+task :fixture do
+  sh "ruby kimchi.rb"
 end
