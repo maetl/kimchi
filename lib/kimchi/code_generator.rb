@@ -2,6 +2,8 @@ module Kimchi
 
   class CodeGenerator
     
+    include ActiveSupport::Inflector
+    
     def initialize
       @nl = "\n"
       @ind = "\t"
@@ -9,8 +11,9 @@ module Kimchi
       @methods = []
     end
     
+    
     def classname=(name)
-      @classname = name
+      @classname = name.camelize
     end
     
     def add_method(method)
@@ -32,7 +35,7 @@ module Kimchi
     
       def class_body
         body = @methods.collect do |method|
-          "#{@nl}#{@ind}public function #{method[:name]}()#{@nl}#{@ind}{#{@nl}#{method_body(method[:sequence])}#{@nl}#{@ind}}#{@nl}"
+          "#{@nl}#{@ind}public function #{method[:name].titleize.gsub(' ', '').camelize(:lower)}()#{@nl}#{@ind}{#{@nl}#{method_body(method[:sequence])}#{@nl}#{@ind}}#{@nl}"
         end
         body.join(@nl)
       end
