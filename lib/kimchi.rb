@@ -6,6 +6,7 @@ $: << File.expand_path(File.dirname(__FILE__))
 
 require 'kimchi/code_generator'
 require 'kimchi/feature_syntax'
+require 'kimchi/test_suite'
 
 module Kimchi
   VERSION = "0.0.0"
