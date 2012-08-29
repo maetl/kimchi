@@ -27,7 +27,7 @@ class CodeGeneratorTest < Test::Unit::TestCase
   def test_can_write_basic_method_to_class
     @generator.classname = "basic method class"
     @generator.add_method(
-      { :name => "basic method function", :sequence => ["call internal process"] }
+      { :name => "basic method function", :sequence => [:name => "call internal process"] }
     )
 
     assert_equal expected_code("basic_method"), @generator.write    
@@ -37,10 +37,25 @@ class CodeGeneratorTest < Test::Unit::TestCase
     @generator.classname = "basic method sequence"
     @generator.add_method(
       { :name => "basic method function", 
-        :sequence => ["call internal process", "assert can do something", "assert can do another thing"] }
+        :sequence => [{ :name => "call internal process" },
+                      { :name => "assert can do something"},
+                      { :name => "assert can do another thing"}] }
     )
 
     assert_equal expected_code("basic_sequence"), @generator.write    
+  end
+  
+  def test_can_write_sequence_with_method_args_to_class
+    @generator.classname = "sequence with arguments"
+    @generator.add_method(
+      { :name => "basic method function", 
+        :sequence => [{ :name => "call internal process"},
+                      { :name => "can check integer", :args => [200]},
+                      { :name => "can check string", :args => ["hello"]},
+                      { :name => "can check multiple args", :args => [404, "not found"]}] }
+    )
+
+    assert_equal expected_code("sequence_args"), @generator.write    
   end
 
 end

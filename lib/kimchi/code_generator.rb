@@ -51,10 +51,19 @@ module Kimchi
       
       def method_body(sequence)
         sequence || sequence = []
-        body = sequence.collect do |line|
-          "#{@ind}#{@ind}$this->#{line.camelize_methodname}();"
+        body = sequence.collect do |method|
+          "#{@ind}#{@ind}$this->#{method[:name].camelize_methodname}#{method_arguments(method[:args])};"
         end
         body.join(@nl) 
+      end
+      
+      def method_arguments(args)
+        if args
+          arguments = args.map { |arg| if arg.is_a?(String) then "\"#{arg}\"" else arg.to_s end }
+        else
+          arguments = []
+        end
+        "(#{arguments.join(', ')})"
       end
     
   end
