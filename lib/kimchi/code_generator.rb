@@ -2,18 +2,23 @@ module Kimchi
 
   class CodeGenerator
     
-    include ActiveSupport::Inflector
+    #include ActiveSupport::Inflector
     
     def initialize
       @nl = "\n"
       @ind = "\t"
       @classname = ""
+      @parent_classname = nil
       @methods = []
     end
     
     
     def classname=(name)
-      @classname = name.camelize
+      @classname = name.camelize_classname
+    end
+    
+    def extends=(name)
+      @parent_classname = name.pearified_classname
     end
     
     def add_method(method)
@@ -30,12 +35,16 @@ module Kimchi
       end
       
       def class_definition
-        "#{@nl}class #{@classname}#{@nl}{#{@nl}#{class_body}#{@nl}}"
+        "#{@nl}class #{@classname}#{parent_class_definition}#{@nl}{#{@nl}#{class_body}#{@nl}}"
+      end
+      
+      def parent_class_definition
+        if @parent_classname then " extends #{@parent_classname}"; end
       end
     
       def class_body
         body = @methods.collect do |method|
-          "#{@nl}#{@ind}public function #{method[:name].titleize.gsub(' ', '').camelize(:lower)}()#{@nl}#{@ind}{#{@nl}#{method_body(method[:sequence])}#{@nl}#{@ind}}#{@nl}"
+          "#{@nl}#{@ind}public function #{method[:name].camelize_methodname}()#{@nl}#{@ind}{#{@nl}#{method_body(method[:sequence])}#{@nl}#{@ind}}#{@nl}"
         end
         body.join(@nl)
       end
@@ -43,7 +52,7 @@ module Kimchi
       def method_body(sequence)
         sequence || sequence = []
         body = sequence.collect do |line|
-          "#{@ind}#{@ind}$this->#{line}();"
+          "#{@ind}#{@ind}$this->#{line.camelize_methodname}();"
         end
         body.join(@nl) 
       end
